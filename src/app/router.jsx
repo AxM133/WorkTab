@@ -17,22 +17,21 @@ import { HomePage } from '@/pages/home/HomePage'
 import { NotFoundPage } from '@/pages/not-found/NotFoundPage'
 import { PlaceholderPage } from '@/pages/placeholder/PlaceholderPage'
 import { UserProfilePage } from '@/pages/profile/UserProfilePage'
+import { CreateWorkPage } from '@/pages/works/CreateWorkPage'
+import { WorkDetailPage } from '@/pages/works/WorkDetailPage'
+import { WorksPage } from '@/pages/works/WorksPage'
+import { ContestDetailPage } from '@/pages/contests/ContestDetailPage'
+import { ContestsPage } from '@/pages/contests/ContestsPage'
+import { CreateContestPage } from '@/pages/contests/CreateContestPage'
 import { ProtectedRoute } from './ProtectedRoute'
-import { ServicesPage } from '@/pages/services/ServicesPage'
-import { CreateOrderPage } from '@/pages/services/CreateOrderPage'
 
-// Страницы, которые ещё не свёрстаны. По мере готовности заменяем PlaceholderPage на реальный компонент.
-const pendingPages = [
-  { path: ROUTES.works, title: 'Каталог ворков' },
-  { path: ROUTES.work(':id'), title: 'Страница ворка' },
   { path: ROUTES.order(':id'), title: 'Страница заказа' },
-  { path: ROUTES.contests, title: 'Конкурсы' },
-  { path: ROUTES.contest(':id'), title: 'Страница конкурса' },
   { path: ROUTES.freelancers, title: 'Топ фрилансеров' },
   { path: ROUTES.chat, title: 'Чат' },
   { path: ROUTES.wallet, title: 'Кошелёк' },
   { path: ROUTES.createWork, title: 'Создание ворка' },
   { path: ROUTES.createContest, title: 'Создание конкурса' },
+  { path: ROUTES.createOrder, title: 'Создание заказа' },
   { path: ROUTES.search, title: 'Быстрый поиск' },
 ]
 
@@ -42,6 +41,9 @@ export const router = createBrowserRouter([
     children: [
       { path: ROUTES.home, element: <HomePage /> },
       { path: ROUTES.profile(':id'), element: <UserProfilePage /> },
+      { path: ROUTES.contests, element: <ContestsPage /> },
+      { path: ROUTES.contest(':id'), element: <ContestDetailPage /> },
+      { path: ROUTES.createContest, element: <CreateContestPage /> },
 
       { path: ROUTES.exchange, element: <ServicesPage /> },
       { path: ROUTES.createOrder, element: <CreateOrderPage /> },
@@ -53,7 +55,6 @@ export const router = createBrowserRouter([
           { path: ROUTES.account, element: <AccountPage /> },
           { path: ROUTES.accountEdit, element: <EditProfilePage /> },
           { path: ROUTES.myOrders, element: <MyOrdersPage /> },
-          { path: ROUTES.favorites, element: <FavoritesPage /> },
         ],
       },
       {
@@ -62,7 +63,15 @@ export const router = createBrowserRouter([
       },
       {
         element: <ProtectedRoute roles={[ROLES.freelancer]} />,
-        children: [{ path: ROUTES.completed, element: <CompletedWorksPage /> }],
+        children: [
+          { path: ROUTES.completed, element: <CompletedWorksPage /> },
+          { path: ROUTES.createWork, element: <CreateWorkPage /> },
+          { path: ROUTES.editWork(':id'), element: <CreateWorkPage /> },
+        ],
+      },
+      {
+        element: <ProtectedRoute roles={[ROLES.client]} />,
+        children: [{ path: ROUTES.createContest, element: <CreateContestPage /> }],
       },
 
       ...pendingPages.map(({ path, title }) => ({
@@ -70,6 +79,17 @@ export const router = createBrowserRouter([
         element: <PlaceholderPage title={title} />,
       })),
       { path: '*', element: <NotFoundPage /> },
+    ],
+  },
+  {
+    element: <StandaloneLayout />,
+    children: [
+      { path: ROUTES.works, element: <WorksPage /> },
+      { path: ROUTES.work(':id'), element: <WorkDetailPage /> },
+      {
+        element: <ProtectedRoute />,
+        children: [{ path: ROUTES.favorites, element: <FavoritesPage /> }],
+      },
     ],
   },
   {
