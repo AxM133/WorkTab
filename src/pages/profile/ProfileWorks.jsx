@@ -1,11 +1,11 @@
-import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { WorkCard } from '@/components/cards/WorkCard'
 import { BriefcaseIcon, PlusIcon } from '@/components/icons'
+import { WorkOwnerActions } from '@/components/works/WorkOwnerActions'
 import { Container, EmptyState, LoadMore, Reveal, SectionHeader } from '@/components/ui'
 import { ROUTES } from '@/constants/routes'
 import { useLoadMore } from '@/hooks/useLoadMore'
-import { getWorksByAuthor } from '@/services/dataService'
+import { useWorks } from '@/hooks/useWorks'
 
 function CreateWorkCard() {
   return (
@@ -23,7 +23,7 @@ function CreateWorkCard() {
 
 /** «Мои ворки» — портфолио услуг фрилансера. Первая карточка у владельца — «Создать ворк» */
 export function ProfileWorks({ user, isOwner }) {
-  const works = useMemo(() => getWorksByAuthor(user.id), [user.id])
+  const works = useWorks().filter((work) => work.authorId === user.id)
   // у владельца первая ячейка занята «Создать ворк», чтобы ряды оставались полными
   const { visible, hasMore, loadMore } = useLoadMore(works, { initial: isOwner ? 11 : 12, step: 8 })
 
@@ -44,6 +44,7 @@ export function ProfileWorks({ user, isOwner }) {
             {visible.map((work, index) => (
               <Reveal as="li" key={work.id} delay={((index + (isOwner ? 1 : 0)) % 4) * 80}>
                 <WorkCard work={work} showFavorite={!isOwner} />
+                {isOwner && <WorkOwnerActions work={work} className="mt-3" />}
               </Reveal>
             ))}
           </ul>

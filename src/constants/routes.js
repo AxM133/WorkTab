@@ -3,6 +3,7 @@ export const ROUTES = {
   exchange: '/exchange',
   works: '/works',
   work: (id) => `/works/${id}`,
+  editWork: (id) => `/works/${id}/edit`,
   order: (id) => `/orders/${id}`,
   contests: '/contests',
   contest: (id) => `/contests/${id}`,
