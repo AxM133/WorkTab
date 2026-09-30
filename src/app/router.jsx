@@ -18,10 +18,11 @@ import { NotFoundPage } from '@/pages/not-found/NotFoundPage'
 import { PlaceholderPage } from '@/pages/placeholder/PlaceholderPage'
 import { UserProfilePage } from '@/pages/profile/UserProfilePage'
 import { ProtectedRoute } from './ProtectedRoute'
+import { ServicesPage } from '@/pages/services/ServicesPage'
+import { CreateOrderPage } from '@/pages/services/CreateOrderPage'
 
 // Страницы, которые ещё не свёрстаны. По мере готовности заменяем PlaceholderPage на реальный компонент.
 const pendingPages = [
-  { path: ROUTES.exchange, title: 'Биржа заказов' },
   { path: ROUTES.works, title: 'Каталог ворков' },
   { path: ROUTES.work(':id'), title: 'Страница ворка' },
   { path: ROUTES.order(':id'), title: 'Страница заказа' },
@@ -31,7 +32,6 @@ const pendingPages = [
   { path: ROUTES.chat, title: 'Чат' },
   { path: ROUTES.wallet, title: 'Кошелёк' },
   { path: ROUTES.createWork, title: 'Создание ворка' },
-  { path: ROUTES.createOrder, title: 'Создание заказа' },
   { path: ROUTES.createContest, title: 'Создание конкурса' },
   { path: ROUTES.search, title: 'Быстрый поиск' },
 ]
@@ -42,6 +42,9 @@ export const router = createBrowserRouter([
     children: [
       { path: ROUTES.home, element: <HomePage /> },
       { path: ROUTES.profile(':id'), element: <UserProfilePage /> },
+
+      { path: ROUTES.exchange, element: <ServicesPage /> },
+      { path: ROUTES.createOrder, element: <CreateOrderPage /> },
 
       // Личный кабинет — только для авторизованных
       {
