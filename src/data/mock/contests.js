@@ -1,0 +1,9 @@
+import desk from '@/assets/images/works/desk.jpg'
+import studio from '@/assets/images/works/studio.jpg'
+import workspace from '@/assets/images/works/workspace.jpg'
+
+export const CONTESTS = [
+  { id: 'contest-brand', title: 'Разработка логотипа для кофейни', category: 'Дизайн', description: 'Нужен современный и запоминающийся логотип для новой городской кофейни. Важно передать атмосферу уюта, кофе и общения.', requirements: ['Логотип в векторе', 'Цветная и монохромная версии', 'Исходники в Figma или Illustrator'], prize: 80000, deadline: '2026-10-18', participants: 24, cover: studio, customer: 'Алия Садыкова', submissions: [{ id: 'submission-1', title: 'Тёплый знак для кофейни', author: 'Мария Лим', cover: workspace }, { id: 'submission-2', title: 'Логотип в стиле city coffee', author: 'Артём Ким', cover: desk }] },
+  { id: 'contest-landing', title: 'Дизайн лендинга для онлайн-школы', category: 'Разработка', description: 'Ищем исполнителя для дизайна одностраничного сайта онлайн-школы. Нужен чистый интерфейс, который помогает записаться на пробный урок.', requirements: ['Desktop и mobile версии', 'Макет в Figma', 'До 8 основных экранов'], prize: 150000, deadline: '2026-11-02', participants: 11, cover: desk, customer: 'Ернар Ибрагимов', submissions: [] },
+  { id: 'contest-packaging', title: 'Концепция упаковки для линейки чая', category: 'Дизайн', description: 'Создаём линейку подарочного чая и ищем выразительную идею упаковки, которая будет хорошо смотреться на полке и в социальных сетях.', requirements: ['3 вкуса в единой системе', 'Визуализация на упаковке', 'Подготовка к печати'], prize: 120000, deadline: '2026-10-27', participants: 18, cover: workspace, customer: 'Диана Ахметова', submissions: [] },
+]
