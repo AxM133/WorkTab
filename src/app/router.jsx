@@ -20,6 +20,9 @@ import { UserProfilePage } from '@/pages/profile/UserProfilePage'
 import { CreateWorkPage } from '@/pages/works/CreateWorkPage'
 import { WorkDetailPage } from '@/pages/works/WorkDetailPage'
 import { WorksPage } from '@/pages/works/WorksPage'
+import { ContestDetailPage } from '@/pages/contests/ContestDetailPage'
+import { ContestsPage } from '@/pages/contests/ContestsPage'
+import { CreateContestPage } from '@/pages/contests/CreateContestPage'
 import { ProtectedRoute } from './ProtectedRoute'
 import { StandaloneLayout } from '@/layouts/StandaloneLayout'
 
@@ -27,13 +30,10 @@ import { StandaloneLayout } from '@/layouts/StandaloneLayout'
 const pendingPages = [
   { path: ROUTES.exchange, title: 'Биржа заказов' },
   { path: ROUTES.order(':id'), title: 'Страница заказа' },
-  { path: ROUTES.contests, title: 'Конкурсы' },
-  { path: ROUTES.contest(':id'), title: 'Страница конкурса' },
   { path: ROUTES.freelancers, title: 'Топ фрилансеров' },
   { path: ROUTES.chat, title: 'Чат' },
   { path: ROUTES.wallet, title: 'Кошелёк' },
   { path: ROUTES.createOrder, title: 'Создание заказа' },
-  { path: ROUTES.createContest, title: 'Создание конкурса' },
   { path: ROUTES.search, title: 'Быстрый поиск' },
 ]
 
@@ -43,6 +43,9 @@ export const router = createBrowserRouter([
     children: [
       { path: ROUTES.home, element: <HomePage /> },
       { path: ROUTES.profile(':id'), element: <UserProfilePage /> },
+      { path: ROUTES.contests, element: <ContestsPage /> },
+      { path: ROUTES.contest(':id'), element: <ContestDetailPage /> },
+      { path: ROUTES.createContest, element: <CreateContestPage /> },
 
       // Личный кабинет — только для авторизованных
       {
@@ -64,6 +67,10 @@ export const router = createBrowserRouter([
           { path: ROUTES.createWork, element: <CreateWorkPage /> },
           { path: ROUTES.editWork(':id'), element: <CreateWorkPage /> },
         ],
+      },
+      {
+        element: <ProtectedRoute roles={[ROLES.client]} />,
+        children: [{ path: ROUTES.createContest, element: <CreateContestPage /> }],
       },
 
       ...pendingPages.map(({ path, title }) => ({

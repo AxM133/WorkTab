@@ -3,6 +3,7 @@
  * позже функции станут запросами к API.
  */
 import { PURCHASES, SALES } from '@/data/mock/deals'
+import { CONTESTS } from '@/data/mock/contests'
 import { ORDERS } from '@/data/mock/orders'
 import { WORKS } from '@/data/mock/portfolio'
 import { REVIEWS } from '@/data/mock/reviews'
@@ -12,6 +13,7 @@ import { getUserById } from './authService'
 const CREATED_WORKS_KEY = 'worktap:created-works'
 const WORK_OVERRIDES_KEY = 'worktap:work-overrides'
 const DELETED_WORKS_KEY = 'worktap:deleted-works'
+const CREATED_CONTESTS_KEY = 'worktap:created-contests'
 export const WORKS_CHANGE_EVENT = 'worktap:works-change'
 
 const readCreatedWorks = () => storage.get(CREATED_WORKS_KEY, [])
@@ -122,3 +124,25 @@ export const getSales = (userId) =>
   SALES.filter((sale) => sale.sellerId === userId).map((sale) => ({ ...sale, work: getWork(sale.workId) }))
 
 export const getOrders = (userId) => ORDERS.filter((order) => order.customerId === userId)
+
+export function getContests() {
+  return [...storage.get(CREATED_CONTESTS_KEY, []), ...CONTESTS]
+}
+
+export function getContest(contestId) {
+  return getContests().find((contest) => contest.id === contestId) ?? null
+}
+
+export function createContest(values, customerId) {
+  const contest = {
+    ...values,
+    id: `contest-${crypto.randomUUID()}`,
+    customerId,
+    status: 'active',
+    participants: 0,
+    submissions: [],
+    createdAt: new Date().toISOString(),
+  }
+  storage.set(CREATED_CONTESTS_KEY, [contest, ...storage.get(CREATED_CONTESTS_KEY, [])])
+  return contest
+}
