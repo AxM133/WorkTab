@@ -3,6 +3,7 @@ import { ROLES } from '@/constants/profile'
 import { ROUTES } from '@/constants/routes'
 import { AuthLayout } from '@/layouts/AuthLayout'
 import { MainLayout } from '@/layouts/MainLayout'
+import { StandaloneLayout } from '@/layouts/StandaloneLayout'
 import { AccountPage } from '@/pages/account/AccountPage'
 import { CompletedWorksPage } from '@/pages/account/CompletedWorksPage'
 import { EditProfilePage } from '@/pages/account/EditProfilePage'
@@ -23,17 +24,16 @@ import { WorksPage } from '@/pages/works/WorksPage'
 import { ContestDetailPage } from '@/pages/contests/ContestDetailPage'
 import { ContestsPage } from '@/pages/contests/ContestsPage'
 import { CreateContestPage } from '@/pages/contests/CreateContestPage'
+import { ServicesPage } from '@/pages/services/ServicesPage'
+import { CreateOrderPage } from '@/pages/services/CreateOrderPage'
 import { ProtectedRoute } from './ProtectedRoute'
-import { StandaloneLayout } from '@/layouts/StandaloneLayout'
 
 // Страницы, которые ещё не свёрстаны. По мере готовности заменяем PlaceholderPage на реальный компонент.
 const pendingPages = [
-  { path: ROUTES.exchange, title: 'Биржа заказов' },
   { path: ROUTES.order(':id'), title: 'Страница заказа' },
   { path: ROUTES.freelancers, title: 'Топ фрилансеров' },
   { path: ROUTES.chat, title: 'Чат' },
   { path: ROUTES.wallet, title: 'Кошелёк' },
-  { path: ROUTES.createOrder, title: 'Создание заказа' },
   { path: ROUTES.search, title: 'Быстрый поиск' },
 ]
 
@@ -45,7 +45,9 @@ export const router = createBrowserRouter([
       { path: ROUTES.profile(':id'), element: <UserProfilePage /> },
       { path: ROUTES.contests, element: <ContestsPage /> },
       { path: ROUTES.contest(':id'), element: <ContestDetailPage /> },
-      { path: ROUTES.createContest, element: <CreateContestPage /> },
+
+      { path: ROUTES.exchange, element: <ServicesPage /> },
+      { path: ROUTES.createOrder, element: <CreateOrderPage /> },
 
       // Личный кабинет — только для авторизованных
       {
